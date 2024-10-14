@@ -8192,8 +8192,9 @@ GameObject:
   - component: {fileID: 863891230}
   - component: {fileID: 863891227}
   - component: {fileID: 863891228}
-  - component: {fileID: 863891229}
   - component: {fileID: 863891231}
+  - component: {fileID: 863891229}
+  - component: {fileID: 863891232}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -8341,7 +8342,19 @@ MonoBehaviour:
     m_ActionId: 0c07ab69-6d25-4db3-8861-87d5fa1ff75a
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 863891229}
+        m_TargetAssemblyTypeName: My2D.PlayerControler, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: c11f4da2-f41f-43c6-a2fb-cacd475c1a61
     m_ActionName: Player/Attack[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -8400,6 +8413,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ac9aa1d9-eed0-49aa-b142-886e03da8ab6
     m_ActionName: Player/Run[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 863891229}
+        m_TargetAssemblyTypeName: My2D.PlayerControler, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4a550aab-4279-4df1-85fe-d47adc2c65c9
+    m_ActionName: Player/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -8417,8 +8446,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524c966c29ed35e48b0caa7e97c82067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 4
+  runSpeed: 8
+  airSpeed: 2
   isMove: 0
   isRun: 0
+  isFacing: 1
 --- !u!70 &863891230
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -8475,6 +8508,35 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &863891232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863891224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b652c23ff3b77c3418ecbc91a385efcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contactFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  groundDistance: 0.05
+  ceilingDistance: 0.05
+  wallDistance: 0.2
 --- !u!1 &936963747
 GameObject:
   m_ObjectHideFlags: 3
@@ -8660,7 +8722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 731544e71dd20e943bbf1bb8bac4e308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 519420031}
+  mainCamera: {fileID: 519420031}
   followTarget: {fileID: 863891226}
 --- !u!1 &955948649
 GameObject:
@@ -8804,7 +8866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 731544e71dd20e943bbf1bb8bac4e308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 519420031}
+  mainCamera: {fileID: 519420031}
   followTarget: {fileID: 863891226}
 --- !u!1 &1701313414
 GameObject:
@@ -9877,7 +9939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 731544e71dd20e943bbf1bb8bac4e308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 519420031}
+  mainCamera: {fileID: 519420031}
   followTarget: {fileID: 863891226}
 --- !u!1 &1780361902
 GameObject:

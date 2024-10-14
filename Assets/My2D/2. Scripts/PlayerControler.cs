@@ -8,7 +8,9 @@ namespace My2D
         // 필드
         #region Variables
         // 단순 변수
-        private float walkSpeed = 4f;        // 걷기 속도
+        [SerializeField] private float walkSpeed = 4f;        // 걷기 속도
+        [SerializeField] private float runSpeed = 8f;
+        [SerializeField] private float airSpeed = 2f;
 
         // 불리언 변수
         [SerializeField] private bool isMove = false;
@@ -21,10 +23,48 @@ namespace My2D
         // 컴포넌트
         private Rigidbody2D rb2D;
         private Animator animator;
+
+        // 클래스 컴포넌트
+        private TouchingDirections groundClass;
         #endregion
 
         // 속성
         #region Properties
+        public float currentMoveSpeed
+        {
+            get
+            {
+                if (CanMove)
+                {
+                    if (isMove && !groundClass.IsWall)
+                    {
+                        if (groundClass.IsGrounded)
+                        {
+                            if (isRun)
+                                return runSpeed;
+
+                            else
+                                return walkSpeed;
+                        }
+
+                        else return airSpeed;
+                    }
+
+                    else return 0f;
+                }
+
+                else return 0f;
+            }
+        }
+
+        public bool CanMove
+        {
+            get
+            {
+                return animator.GetBool(AnimationString.CanMove);
+            }
+        }
+
         public bool IsMove
         {
             get { return isMove; }
@@ -60,9 +100,17 @@ namespace My2D
 
         // 라이프 사이클
         #region Life cycle
+        private void Start()
+        {
+            animator.SetBool(AnimationString.CanMove, true);
+        }
+
         private void FixedUpdate()
         {
-            rb2D.velocity = new(inputMove.x * walkSpeed, rb2D.velocity.y);
+            rb2D.velocity = new(inputMove.x * currentMoveSpeed, rb2D.velocity.y);
+
+            // 애니메이션 값
+            animator.SetFloat(AnimationString.yVelocity, rb2D.velocity.y);
         }
 
         private void Awake()
@@ -70,6 +118,7 @@ namespace My2D
             // 컴포넌트 참조
             rb2D = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
+            groundClass = GetComponent<TouchingDirections>();
         }
         #endregion
 
@@ -96,6 +145,23 @@ namespace My2D
             else if (context.canceled)
             {
                 IsRun = false;
+            }
+        }
+
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            if (context.started && groundClass.IsGrounded)
+            {
+                rb2D.velocity += Vector2.up * 5;
+                animator.SetTrigger(AnimationString.jumpTrigger);
+            }
+        }
+
+        public void OnAttack(InputAction.CallbackContext context)
+        {
+            if (context.started && groundClass.IsGrounded)
+            {
+                animator.SetTrigger(AnimationString.attackTrigger);
             }
         }
         #endregion
