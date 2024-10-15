@@ -9,6 +9,7 @@ namespace My2D
         public static string isMove = "isMove";
         public static string isRun = "isRun";
         public static string CanMove = "CanMove";
+        public static string hasTarget = "hasTarget";
         public static string jumpTrigger = "jumpTrigger";
         public static string attackTrigger = "attackTrigger";
         public static string yVelocity = "yVelocity";

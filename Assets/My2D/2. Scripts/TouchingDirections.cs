@@ -25,6 +25,7 @@ namespace My2D
         #endregion
 
         // 속성
+        #region Properties
         public bool IsGrounded
         {
             get { return isGrounded; }
@@ -53,6 +54,7 @@ namespace My2D
                 isWall = value;
             }
         }
+        #endregion
 
         // 라이프 사이클
         #region Life Cycle
